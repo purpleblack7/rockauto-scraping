@@ -12,13 +12,10 @@ basic_url = url + make + "," + year + "," + model
 page = requests.get(basic_url) 
 
 soup = BeautifulSoup(page.content, "html.parser")
-results = soup.find(id = "treeroot[catalog]")
 
-elements = results.find_all("a",class_ = "navlabellink nvoffset nnormal", href = True)
 
-for element in elements:
-	print(element['href'])
-	print(element.get_text())
-	#print(element.get_text())
-	#print(element.geA
-	print("Please Clap")
+results = soup.find(id = "temp_everything")
+
+element = results.find_all("div", class_ = "ranavnode")
+kyu = element[0]
+print(kyu) 
