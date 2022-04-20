@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
+import inquirer
+
 
 #Getting the base URL from rockauto. All searches in English start with this
 url="https://www.rockauto.com/en/catalog/"
@@ -28,6 +30,16 @@ for element in elements:
 	if element.get_text() not in {make.upper(),year,model.upper()}:
 		trim_hrefs[element.get_text()] = element['href']		
 
-for trim in trim_hrefs.keys():
+#for trim in trim_hrefs.keys():
+#
+#print(trim_hrefs)
 
-print(trim_hrefs)
+
+questions = [
+  inquirer.List('trim',
+		message = "Select your engine configuration",
+		choices = trim_hrefs.keys()
+		),
+]
+answers = inquirer.prompt(questions)
+print(answers["trim"])	
