@@ -42,4 +42,7 @@ questions = [
 		),
 ]
 answers = inquirer.prompt(questions)
-print(answers["trim"])	
+print("You selected: ",answers["trim"])
+trim_selected = answers["trim"]
+print(trim_hrefs[trim_selected])
+final_url = "https://www.rockauto.com"+ trim_hrefs[trim_selected] 	
