@@ -1,0 +1,21 @@
+Metadata-Version: 2.1
+Name: parts-scraper
+Version: 0.0.1
+Summary: A package that scrapes prices of parts on rockauto.com
+Home-page: https://github.com/stevanthomas/rockauto-scraping
+Author: Stevan Thomas
+Author-email: stevansunny@gmail.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/stevanthomas/rockauto-scraping/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+License-File: LICENSE
+
+# rockauto-scraping
+
+
+This project is my attempt to learn to scrape from the web. The website I'll be scraping is RockAuto. Because they have a simpler website, it will be easier for me to scrape prices from their site.
+
+
