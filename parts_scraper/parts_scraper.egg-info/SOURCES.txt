@@ -2,6 +2,7 @@ LICENSE
 README.md
 pyproject.toml
 setup.cfg
+setup.py
 parts_scraper/parts_scraper.egg-info/PKG-INFO
 parts_scraper/parts_scraper.egg-info/SOURCES.txt
 parts_scraper/parts_scraper.egg-info/dependency_links.txt

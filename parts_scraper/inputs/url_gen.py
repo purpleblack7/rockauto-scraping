@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import inquirer
 
-def cust_specs(self): 
+def cust_specs(): 
 	#Getting the base URL from rockauto. All searches in English start with this
 	url="https://www.rockauto.com/en/catalog/"
 
