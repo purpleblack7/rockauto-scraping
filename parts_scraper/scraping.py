@@ -5,6 +5,7 @@ import inquirer
 
 #Getting the base URL from rockauto. All searches in English start with this
 url="https://www.rockauto.com/en/catalog/"
+bare_url = "https://www.rockauto.com/"
 
 #Getting the car details from the user. Note: Functionize this with error catching included
 make = input("Enter the name of the Manufacturer: ")
@@ -53,6 +54,7 @@ To get an input from the user, we list the available choices for each parent men
 
 	"""
 	output_set = {}
+
 	for element in elements:
 		if element.get_text() not in exclusion_set:
 			output_set[element.get_text()] = element['href']		
@@ -73,7 +75,7 @@ answers = inquirer.prompt(questions)
 print("You selected: ",answers["trim"])
 trim_selected = answers["trim"]
 print(trim_hrefs[trim_selected])
-final_url = "https://www.rockauto.com"+ trim_hrefs[trim_selected] 
+inter_url = bare_url+ trim_hrefs[trim_selected] 
 
 
 
@@ -83,11 +85,29 @@ list_position.append(answers["trim"])
 ###The actual scraping
 
 
-page = requests.get(final_url)
+page = requests.get(inter_url) 
 soup = BeautifulSoup(page.content, "html.parser")
 results = soup.find_all("a", class_ = "navlabellink nvoffset nnormal", href = True )
 
-kyu = list_stripper(results, list_position)
-print(kyu)
+part_categories_href = list_stripper(results, list_position)
+
+###### For later when iterating over multiple elements
+#for pc in part_categories_href.keys():
+#	print("Extracting {0} data".format(pc))
+#	inter_url =  bare_url + part_categories_href[pc]
+#	page = requests.get(inter_url) 
+#	soup = BeautifulSoup(page.content, "html.parser")
+#
+#	#treeroot[catalog] is the portion where you select the Manufacturer begins
+#	results = soup.find_all("td", class_ ="nlabel") 
 
 
+
+# Testing for single element in the list. Convert to iteration when done
+
+inter_url = bare_url + part_categories_href['Accessories']
+page = requests.get(inter_url)
+soup = BeautifulSoup(page.content, "html.parser")
+results = soup.find("div", class_ = "nchildren")
+print(results["href"])
+print(results.get_text())
