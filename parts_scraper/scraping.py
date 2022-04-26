@@ -74,7 +74,7 @@ questions = [
 answers = inquirer.prompt(questions)
 print("You selected: ",answers["trim"])
 trim_selected = answers["trim"]
-print(trim_hrefs[trim_selected])
+#print(trim_hrefs[trim_selected])
 inter_url = bare_url+ trim_hrefs[trim_selected] 
 
 
@@ -105,9 +105,17 @@ part_categories_href = list_stripper(results, list_position)
 
 # Testing for single element in the list. Convert to iteration when done
 
+## This part gets a bit tricky and I'm unable to use list_stripper because there is no one properly defined class here. It goes from 'navlabellink nvoffset nimportant' to 'navlabellink nvoffset nnormal' to even 'navlabellink nvoffset nreversevideo'(lol wut?). So I tried a different approach here where I extract the link first and build the string from there.
 inter_url = bare_url + part_categories_href['Accessories']
 page = requests.get(inter_url)
 soup = BeautifulSoup(page.content, "html.parser")
-results = soup.find("div", class_ = "nchildren")
-print(results["href"])
-print(results.get_text())
+results = soup.find_all("td", class_ = "niconspace ncollapsedicon")
+href_list = []
+#Getting all the links first
+for result in results:
+	element = result.find(href = True)
+	href_list.append(element['href'])
+#Building the string from it
+for href in href_list:
+	print (href)
+#print(href_list)
