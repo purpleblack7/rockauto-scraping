@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import inquirer
-
+import re
 
 #Getting the base URL from rockauto. All searches in English start with this
 url="https://www.rockauto.com/en/catalog/"
@@ -106,16 +106,40 @@ part_categories_href = list_stripper(results, list_position)
 # Testing for single element in the list. Convert to iteration when done
 
 ## This part gets a bit tricky and I'm unable to use list_stripper because there is no one properly defined class here. It goes from 'navlabellink nvoffset nimportant' to 'navlabellink nvoffset nnormal' to even 'navlabellink nvoffset nreversevideo'(lol wut?). So I tried a different approach here where I extract the link first and build the string from there.
+part_cat = 'Accessories'
 inter_url = bare_url + part_categories_href['Accessories']
 page = requests.get(inter_url)
 soup = BeautifulSoup(page.content, "html.parser")
 results = soup.find_all("td", class_ = "niconspace ncollapsedicon")
 href_list = []
+pc_href = {}
 #Getting all the links first
 for result in results:
 	element = result.find(href = True)
 	href_list.append(element['href'])
 #Building the string from it
 for href in href_list:
-	print (href)
-#print(href_list)
+	text = href.split(',')[6].replace('+',' ').upper()
+	pc_href[text] = href
+
+
+for pc in pc_href:
+	print(pc)
+	inter_url = bare_url + pc_href[pc]
+	#print(inter_url)
+	page = requests.get(inter_url)
+	soup = BeautifulSoup(page.content, "html.parser")
+	results = soup.find_all("div",class_ ="listing-text-row-moreinfo-truck")
+	#print(type(result))
+	for result in results:
+		print(result)
+		manufacturer = result.find("span", class_ = "listing-final-manufacturer")
+		print(manufacturer.get_text())
+		part_num = result.find("span", class_ = "listing-final-partnumber as-link-if-js buyers-guide-color")
+		print(part_num.get_text())
+		desc = result.find("span", class_ = "span-link-underline-remover")
+		print(desc.get_text())
+#<span class="listing-final-partnumber  as-link-if-js buyers-guide-color" id="vew_partnumber[10394]" onclick="if (cataloglite.IsMobileAndNotExpanded(&quot;10394&quot;)) { return; } cataloglite.ShowBuyersGuidePopup(&quot;10394&quot;);" title="Buyer's Guide" alt="Buyer's Guide">11423</span>
+	#kyu = result.find("span", class_ = "listing-final-manufacturer")
+#	print(kyu)
+"listing-final-partnumber as-link-if-js buyers-guide-color"
