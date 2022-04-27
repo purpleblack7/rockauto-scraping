@@ -132,14 +132,21 @@ for pc in pc_href:
 	results = soup.find_all("div",class_ ="listing-text-row-moreinfo-truck")
 	#print(type(result))
 	for result in results:
-		print(result)
+		#print(result)
 		manufacturer = result.find("span", class_ = "listing-final-manufacturer")
 		print(manufacturer.get_text())
 		part_num = result.find("span", class_ = "listing-final-partnumber as-link-if-js buyers-guide-color")
 		print(part_num.get_text())
 		desc = result.find("span", class_ = "span-link-underline-remover")
 		print(desc.get_text())
+	results_text = soup.find_all("div", class_ = "listing-text-row")
+	for result_text in results_text:
+		print(result_text.get_text())
+
+	results_price = soup.find_all("span", class_ ="ra-formatted-amount listing-price listing-amount-bold")
+	for result_price in results_price:
+		print(result_price.get_text())
 #<span class="listing-final-partnumber  as-link-if-js buyers-guide-color" id="vew_partnumber[10394]" onclick="if (cataloglite.IsMobileAndNotExpanded(&quot;10394&quot;)) { return; } cataloglite.ShowBuyersGuidePopup(&quot;10394&quot;);" title="Buyer's Guide" alt="Buyer's Guide">11423</span>
 	#kyu = result.find("span", class_ = "listing-final-manufacturer")
 #	print(kyu)
-"listing-final-partnumber as-link-if-js buyers-guide-color"
+#<span class="ra-formatted-amount listing-price listing-amount-bold"><span id="dprice[837][v]">$310.79</span></span>
