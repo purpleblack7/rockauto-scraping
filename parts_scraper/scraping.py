@@ -13,6 +13,7 @@ make = input("Enter the name of the Manufacturer: ")
 year = input("Enter the year of the vehicle: ")
 model = input("Enter the model of the vehicle: ")
 
+print(make,model)
 #Appending the retrieved parameters to make the URL more precise
 basic_url = url + make + "," + year + "," + model
 
@@ -110,7 +111,6 @@ part_categories_href = list_stripper(results, list_position)
 
 #Creating a master dataframe
 df =pd.DataFrame()
-
 part_cat = 'Accessories'
 inter_url = bare_url + part_categories_href['Accessories']
 page = requests.get(inter_url)
@@ -176,13 +176,20 @@ for pc in pc_href:
 
 	#Creating an intermediate dataframe
 	df1= pd.DataFrame([part_num_list,manufacturer_list,desc_list, part_text_list,price_list]).T#, columns = ["ID","Manufacturer","Description","Details","Price"])
+	df1["Part"] = pc 
 	print(df1)
 	df = pd.concat([df,df1])
 
 df = df.rename(columns = {0:"ID",1:"Manufacturer",2:"Description",3:"Details",4:"Price"})	
 print(df)
 
+
+
+df["Make"] = "AUdi"
+df["Model"] = model 
+
+
 #<span class="listing-final-partnumber  as-link-if-js buyers-guide-color" id="vew_partnumber[10394]" onclick="if (cataloglite.IsMobileAndNotExpanded(&quot;10394&quot;)) { return; } cataloglite.ShowBuyersGuidePopup(&quot;10394&quot;);" title="Buyer's Guide" alt="Buyer's Guide">11423</span>
 	#kyu = result.find("span", class_ = "listing-final-manufacturer")
 #	print(kyu)
-#<span class="ra-formatted-amount listing-price listing-amount-bold"><span id="dprice[837][v]">$310.79</span></span>
+#<span class=hhjjra-formatted-amount listing-price listing-amount-bold"><span id="dprice[837][v]">$310.79</span></span>
